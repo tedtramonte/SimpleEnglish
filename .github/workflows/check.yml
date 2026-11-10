@@ -12,4 +12,5 @@ jobs:
       - run: python3 evals/ste_lint.py --self-test
       - run: node --test src/hooks/simple-english-activate.test.js
       - run: python3 src/hooks/test_lint_hook.py
+      - run: node --test src/omp/extension.test.mjs
       - run: python3 evals/check_numbers.py
