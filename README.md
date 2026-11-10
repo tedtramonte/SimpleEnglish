@@ -12,7 +12,7 @@
   <a href="evals/results/rebuild-2026-09-02/RESULTS.md"><img src="https://img.shields.io/badge/reply_defects-%E2%88%9295%25_measured-brightgreen?style=flat" alt="95% fewer visible reply defects, measured"></a>
   <a href="evals/results/RESULTS.md"><img src="https://img.shields.io/badge/benchmarked_on-9_Claude_models-blueviolet?style=flat" alt="9 models benchmarked"></a>
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/SKILL.md-open_standard-blue?style=flat" alt="Agent Skills"></a>
-  <a href="skills/simple-english/SKILL.md"><img src="https://img.shields.io/badge/version-2.1.2-blue?style=flat" alt="version 2.1.2"></a>
+  <a href="skills/simple-english/SKILL.md"><img src="https://img.shields.io/badge/version-2.2.0-blue?style=flat" alt="version 2.2.0"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat" alt="MIT"></a>
   <a href="https://github.com/AminBlg/SimpleEnglish/stargazers"><img src="https://img.shields.io/github/stars/AminBlg/SimpleEnglish?style=flat&logo=github&color=yellow" alt="GitHub stars"></a>
 </p>
@@ -50,7 +50,16 @@ codex plugin add simple-english@simple-english
 
 Codex asks you to trust the hook before its first run. The hooks need Node.js. Details in [`src/hooks/README.md`](src/hooks/README.md).
 
-No skill support? Paste the rule block of [`prompts/system-prompt.md`](prompts/system-prompt.md) into your system prompt, `AGENTS.md`, or `.cursorrules`. The page ends with a 60-token version for tight budgets.
+OMP extension, with the same hooks as an extension:
+
+```bash
+omp plugin marketplace add AminBlg/SimpleEnglish
+omp plugin install simple-english@simple-english
+```
+
+The `omp.extensions` entry in the package `package.json` loads `src/omp/extension.mjs`. It registers the three hooks as OMP extension events: `before_agent_start` appends the rule block to the system prompt of every provider request, `tool_result` lints the Markdown file a `Write` or `Edit` tool call just made, and `session_stop` checks the reply register and asks for one advisory continuation when it breaks the rules. The linting runs `src/hooks/lint_hook.py` with the same JSON events the Claude Code hooks receive, so one codebase holds the rules for every harness. The checks need Node.js and Python 3. They never block or loop the session.
+
+No skill support? Paste the rule block of [`prompts/system-prompt.md`](prompts/system-prompt.md) into your system prompt, `AGENTS.md`, or `.cursorrules`. The page ends with a 60-token version for tight budgets. The extension detects the marker in the rule block and does not add the block a second time.
 
 Then ask for any technical writing, or say "rewrite this with simple-english".
 

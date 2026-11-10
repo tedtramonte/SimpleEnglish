@@ -34,6 +34,7 @@ If the hook cannot read the prompt file, it tries the next location. If every lo
 
 - Claude Code: the `hooks` field in `.claude-plugin/plugin.json`.
 - Codex: `.codex-plugin/hooks.json`, named by the `hooks` field in `.codex-plugin/plugin.json`. The marketplace catalog is `.agents/plugins/marketplace.json`.
+- OMP: the `omp.extensions` entry in the package `package.json` loads `src/omp/extension.mjs`, which registers the three hooks as extension events and delegates the linting to this hook script.
 
 ## Test
 

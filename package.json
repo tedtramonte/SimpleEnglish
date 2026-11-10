@@ -1,0 +1,18 @@
+{
+  "name": "simple-english",
+  "version": "2.2.0",
+  "private": true,
+  "description": "Write plain, layman-readable English with the discipline of ASD-STE100 Simplified Technical English: short sentences, one word one meaning, active voice, condition before command, terms defined at first use.",
+  "homepage": "https://github.com/AminBlg/SimpleEnglish",
+  "repository": "https://github.com/AminBlg/SimpleEnglish",
+  "license": "MIT",
+  "keywords": [
+    "technical-writing",
+    "documentation",
+    "ste",
+    "asd-ste100"
+  ],
+  "omp": {
+    "extensions": ["./src/omp/extension.mjs"]
+  }
+}

@@ -2,6 +2,23 @@
 
 Each entry names the version, the date, and the measured effect where one exists.
 
+## 2.2.0, 2026-11-10
+
+- Added: an OMP extension. The `omp.extensions` entry in the package
+  `package.json` loads `src/omp/extension.mjs`, which registers the plugin's
+  three hooks as OMP extension events: `before_agent_start` appends the rule
+  block to the system prompt of every provider request, `tool_result` lints
+  the Markdown file a `Write` or `Edit` tool call just made, and
+  `session_stop` checks the reply register and asks for one advisory
+  continuation when it breaks the rules.
+- Changed: the OMP checks delegate the linting to `src/hooks/lint_hook.py`
+  with the same JSON events the Claude Code hooks receive. One codebase holds
+  the rules for every harness. The checks are advisory: a lint failure, a
+  missing interpreter, or a hung linter never blocks or loops the session.
+  The file check inherits `SIMPLE_ENGLISH_LINT_EXCLUDE` from the
+  environment, as under Claude Code.
+- Added: `node --test src/omp/extension.test.js` to the CI check workflow.
+
 ## 2.1.2, 2026-11-10
 
 - Changed: the reply rule. A reply is prose by default. A label line, a list,
